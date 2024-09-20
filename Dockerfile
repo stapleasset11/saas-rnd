@@ -4,7 +4,7 @@ ARG PYTHON_VERSION=3.12-slim-bullseye
 FROM python:${PYTHON_VERSION}
 
 # Create a virtual environment
-RUN python -m venv /opt/venv
+RUN python3 -m venv /opt/venv
 
 # Set the virtual environment as the current location
 ENV PATH=/opt/venv/bin:$PATH

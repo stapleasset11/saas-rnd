@@ -30,7 +30,7 @@ ALLOWED_HOSTS = [
 ]
 
 if DEBUG:
-    ALLOWED_HOSTS += [ '127.0.0.1','localhost']
+    ALLOWED_HOSTS += [ '127.0.0.1','localhost','saas-rnd-production-60dd.up.railway.app' ]
 
 
 # Application definition

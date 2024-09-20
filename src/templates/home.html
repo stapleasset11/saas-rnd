@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+
+
+{% block head_title %}
+    {{ page_title }} - {{block.super}}
+{% endblock head_title %}
+
+
+{% block content %}
+    <p>Render the damn page!!!</p>
+    {% include 'snippets/welcome-user-msg.html' %}
+
+    <p>page visits: {{ page_visit_count }}</p>
+    <p>Total visits: {{ total_visit_count }}</p>
+    <p>Rate of conversion {{ Conversion_percentage }}</p>
+{% endblock content %}
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+    
+    <body>
+        <div class="txt-3xl">
+            <h1>Lets get cooking!!!!!!!!</h1>
+            <h2>{{page_title}}</h2>
+
+        <p> This is my Saas app building attempt</p>
+        <p>{{request.user}} {{request.method}}</p>
+
+        </div>
+        
+    </body>
+</html> -->
+
+

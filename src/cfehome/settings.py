@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    
     'django.contrib.staticfiles',
 
     #my apps
@@ -136,11 +137,30 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+import os
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = 'static/'
+# BASE_DIR = Path(__file__).resolve().parent.parent
+
+STATIC_URL = '/static/'
+
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
+STATICFILES_BASE_DIR = BASE_DIR / 'staticfiles'
+# STATICFILES_BASE_DIR.mkdir(exist_ok=True, parents=True)
+STATIC_FILES_VENDOR_DIR = STATICFILES_BASE_DIR / 'vendors'
+
+#Source(s) for python manage.py collectstatic
+STATIC_FILES_DIRS = [
+    STATICFILES_DIRS
+       
+]
+ 
+#Output for python manage.py collectstatic
+# local cdn
+STATIC_ROOT = BASE_DIR / 'local-cdn'
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field

@@ -46,11 +46,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    
     'django.contrib.staticfiles',
-
     #my apps
+    
     'visits',
+    'commando'
 ]
 
 MIDDLEWARE = [
@@ -95,7 +95,7 @@ DATABASES = {
 }
 
 CONN_MAX_AGE = config("CONN_MAX_AGE",cast=int,default=300)
-DATABASE_URL = config("DATABASE_URL", cast=str)
+DATABASE_URL = config("DATABASE_URL", default=None)
 
 
 if DATABASE_URL is not None:
@@ -148,7 +148,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
 STATICFILES_BASE_DIR = BASE_DIR / 'staticfiles'
 # STATICFILES_BASE_DIR.mkdir(exist_ok=True, parents=True)
-STATIC_FILES_VENDOR_DIR = STATICFILES_BASE_DIR / 'vendors'
+STATICFILES_VENDOR_DIR = STATICFILES_BASE_DIR / 'vendors'
 
 #Source(s) for python manage.py collectstatic
 STATIC_FILES_DIRS = [

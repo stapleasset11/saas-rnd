@@ -42,7 +42,8 @@ COPY ./src /code
 
 # Install the Python project requirements
 RUN pip install -r /tmp/requirements.txt
-# RUN pip install gunicorn
+
+RUN pip install gunicorn
 ARG DJANGO_SECRET_KEY
 ENV DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
 

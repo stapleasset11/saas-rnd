@@ -1,0 +1,13 @@
+{% extends "account/base.html" %}
+{% load i18n %}
+{% block head_title %}
+    {% translate "Sign out" %}
+{% endblock %}
+{% block whitebox %}
+    <form method="post" action="{% url 'account_logout' %}">
+        {% csrf_token %}
+        <p>{% translate "Are you sure you want to sign out?" %}</p>
+        {% translate "Sign out" as signout_message %}
+        <button type="submit" class="bg-red-500 text-white font-bold py-2 px-4 rounded hover:bg-red-700">{{ signout_message }}</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,32 @@
+components:
+  Login:
+    template: allauth/account/login.html
+    description: A component for user login.
+
+  Signup:
+    template: allauth/account/signup.html
+    description: A component for user signup.
+
+  Password_Reset:
+    template: allauth/account/password_reset.html
+    description: A component for password reset requests.
+
+  Password_Change:
+    template: allauth/account/password_change.html
+    description: A component for changing user passwords.
+
+  Email_Confirmation:
+    template: allauth/account/email_confirm.html
+    description: A component for confirming user email addresses.
+
+  Password_Reset_Done:
+    template: allauth/account/password_reset_done.html
+    description: A component displayed after a password reset request.
+
+  Password_Reset_Key:
+    template: allauth/account/password_reset_key.html
+    description: A component for entering a new password after confirming reset.
+
+  Email_Confirmation_Sent:
+    template: allauth/account/email_confirm_sent.html
+    description: A component displayed after a confirmation email has been sent.

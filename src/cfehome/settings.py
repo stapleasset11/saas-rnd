@@ -15,6 +15,30 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+#Email conf.
+# default backend
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = config("EMAIL_HOST", cast=str, default=None)
+EMAIL_PORT = config("EMAIL_PORT", cast=str, default='587') # Recommended
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", cast=str, default=None)
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", cast=str, default=None)
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", cast=bool, default=True)  # Use EMAIL_PORT 587 for TLS
+EMAIL_USE_SSL = config("EMAIL_USE_SSL", cast=bool, default=False)  # EUse MAIL_PORT 465 for SSL
+
+# ADMINS=[('Lenny','mwavulalenjo@gmail.com')]
+# MANAGERS=ADMINS
+
+ADMIN_USER_NAME=config("ADMIN_USER_NAME", default="Admin user")
+ADMIN_USER_EMAIL=config("ADMIN_USER_EMAIL", default=None)
+
+MANAGERS=[]
+ADMINS=[]
+if all([ADMIN_USER_NAME, ADMIN_USER_EMAIL]):
+    # 500 errors are emailed to these users
+    ADMINS +=[
+        (f'{ADMIN_USER_NAME}', f'{ADMIN_USER_EMAIL}')
+    ]
+    MANAGERS=ADMINS
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -50,19 +74,48 @@ INSTALLED_APPS = [
     #my apps
     
     'visits',
-    'commando'
+    'commando',
+    'profiles',
+
+    #Third party apps
+    "allauth_ui",
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
+    "widget_tweaks",
+    "slippers",
+    
+    
+    
 ]
+
+# ALLAUTH_UI_THEME = "light"
+
+# MIDDLEWARE = [
+#     'django.middleware.security.SecurityMiddleware',
+#     "whitenoise.middleware.WhiteNoiseMiddleware",
+#     'django.contrib.sessions.middleware.SessionMiddleware',
+#     'django.middleware.common.CommonMiddleware',
+#     'django.middleware.csrf.CsrfViewMiddleware',
+#     'django.contrib.auth.middleware.AuthenticationMiddleware',
+#     'django.contrib.messages.middleware.MessageMiddleware',
+#     "allauth.account.middleware.AccountMiddleware",
+#     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+# ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',  # Move this up
     'django.contrib.messages.middleware.MessageMiddleware',
+    'allauth.account.middleware.AccountMiddleware',  # Keep this here
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
 
 ROOT_URLCONF = 'cfehome.urls'
 
@@ -70,6 +123,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [BASE_DIR / "templates"],
+        # 'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -126,6 +180,28 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+#Django config
+LOGIN_REDIRECT_URL="/"
+ACCOUNT_AUTHENTICATION_METHOD = "username_email"
+ACCOUNT_EMAIL_VERIFICATION = "mandatory"
+ACCOUNT_EMAIL_SUBJECT_PREFIX = "[lenny]"
+ACCOUNT_EMAIL_REQUIRED=True
+
+AUTHENTICATION_BACKENDS = [
+    
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
+ ]
+
+SOCIALACCOUNT_PROVIDERS = {
+    "github": {
+        "VERIFIED_EMAIL": True
+    }
+}
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
@@ -138,23 +214,30 @@ USE_I18N = True
 
 USE_TZ = True
 
-import os
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
 # BASE_DIR = Path(__file__).resolve().parent.parent
+# import os
+# STATIC_URL = '/static/'
 
-STATIC_URL = '/static/'
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
+# STATICFILES_BASE_DIR = BASE_DIR / 'staticfiles'
+# # STATICFILES_BASE_DIR.mkdir(exist_ok=True, parents=True)
+# STATICFILES_VENDOR_DIR = STATICFILES_BASE_DIR / 'vendors'
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'staticfiles')]
-STATICFILES_BASE_DIR = BASE_DIR / 'staticfiles'
-# STATICFILES_BASE_DIR.mkdir(exist_ok=True, parents=True)
-STATICFILES_VENDOR_DIR = STATICFILES_BASE_DIR / 'vendors'
-
-#Source(s) for python manage.py collectstatic
-STATIC_FILES_DIRS = [
-    STATICFILES_DIRS
+# #Source(s) for python manage.py collectstatic
+# STATIC_FILES_DIRS = [
+#     STATICFILES_DIRS
        
+# ]
+
+STATIC_URL = "static/"
+STATICFILES_BASE_DIR = BASE_DIR / "staticfiles"
+# STATICFILES_BASE_DIR.mkdir(exist_ok=True, parents=True)
+STATICFILES_VENDOR_DIR = STATICFILES_BASE_DIR / "vendors"
+STATICFILES_DIRS = [
+    STATICFILES_BASE_DIR
 ]
  
 #Output for python manage.py collectstatic

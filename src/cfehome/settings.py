@@ -58,7 +58,10 @@ ALLOWED_HOSTS = [
 ]
 
 if DEBUG:
-    ALLOWED_HOSTS += [ '127.0.0.1','localhost' ]
+    ALLOWED_HOSTS += [ 'https://saas-rnd-production-60dd.up.railway.app/','127.0.0.1','localhost' ]
+                      
+    CSRF_TRUSTED_ORIGINS = ['https://saas-rnd-production-60dd.up.railway.app/']
+                      
 
 
 # Application definition
